@@ -1,0 +1,28 @@
+domain: http://localhost:8000
+
+log_level: 3
+
+actions:
+    - path: /
+    - path: "/hello?v1=%(v1)%&non2=v5&ev2=%(ev2)%&v2=%(v2)%"
+
+exvars:
+    - name: ev1
+      file: ev.txt
+    - name: ev2
+      file: ev.txt
+
+vars:
+    - name: v1
+      file: v1.txt
+    - name: v2
+      file: v2.txt
+
+consts:
+    c1: hoge
+    c2: fuga
+
+query_params:
+    qp1: "%(ev1)%"
+    qp2: "%(c1)%"
+    qp3: "%(c2)%"

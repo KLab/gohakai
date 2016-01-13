@@ -1,0 +1,9 @@
+# minimal.yml
+domain: https://localhost:8000
+
+http_version: 2
+
+actions:
+    - path: /
+    - path: /hello
+

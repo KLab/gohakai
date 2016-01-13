@@ -1,0 +1,37 @@
+domain: http://127.0.0.1/
+
+log_level: 3
+
+nodes:
+    - host: vagrant@192.168.1.100
+      proc: 2
+      ssh_key: ~/.ssh/id_rsa
+    - host: vagrant@192.168.1.101
+      proc: 2
+      ssh_key: ~/.ssh/id_rsa
+    - host: localhost
+      proc: 1
+
+actions:
+    - path: /
+
+exvars:
+    - name: ev1
+      file: ev.txt
+    - name: ev2
+      file: ev.txt
+
+vars:
+    - name: v1
+      file: v1.txt
+    - name: v2
+      file: v2.txt
+
+consts:
+    c1: hoge
+    c2: fuga
+
+query_params:
+    qp1: "%(ev1)%"
+    qp2: "%(c1)%"
+    qp3: "%(c2)%"

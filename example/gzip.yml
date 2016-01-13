@@ -1,0 +1,12 @@
+# minimal.yml
+domain: http://localhost:8000/
+
+timeout: 30
+
+gzip: true
+
+actions:
+    - path: /
+      scan: "Hello"
+    - path: /tasks.html
+

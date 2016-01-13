@@ -1,0 +1,11 @@
+# minimal.yml
+domain: http://localhost:8000
+
+actions:
+    - path: /
+      method: POST
+      content: '{"a": true, "b": 1}'
+      content_type: 'application/json'
+    - path: /hello
+
+show_report: true
