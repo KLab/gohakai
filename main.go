@@ -79,8 +79,7 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 		}
 		content = strings.NewReader(values.Encode())
 	} else {
-		_content, ret := atk.Action["content"]
-		if ret {
+		if _content, ret := atk.Action["content"]; ret {
 			content = strings.NewReader(ReplaceNames(_content.(string), atk.ExVarOffset))
 		}
 	}

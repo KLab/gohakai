@@ -58,18 +58,15 @@ func ReplaceNames(input string, offset map[string]int) string {
 		tname := re.FindAllStringSubmatch(s, -1)
 
 		for _, t := range tname {
-			c, ok := CONSTS[t[1]]
-			if ok {
+			if c, ok := CONSTS[t[1]]; ok {
 				return c
 			}
 
-			v, ok := VARS[t[1]]
-			if ok {
+			if v, ok := VARS[t[1]]; ok {
 				return v[rand.Intn(len(v))]
 			}
 
-			e, ok := EXVARS[t[1]]
-			if ok {
+			if e, ok := EXVARS[t[1]]; ok {
 				_e := e.Value[offset[t[1]]]
 				return _e
 			}
