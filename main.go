@@ -31,6 +31,8 @@ const (
 	MODE_NODE_LOCAL    = "node-local"
 )
 
+var client http.Client
+
 var ExecMode string = MODE_NORMAL
 var GitCommit string
 var PathCount map[string]uint32
@@ -169,6 +171,10 @@ func (atk *Attacker) Attack(offset int) {
 			log.Println(atk.Url)
 			fmt.Print(string(body))
 		}
+	} else {
+		if _, err := ioutil.ReadAll(res.Body); err != nil {
+			log.Println(err)
+		}
 	}
 
 	if verbose {
@@ -294,7 +300,6 @@ func attackNode(configFile string, c chan string, wg *sync.WaitGroup) {
 func localMain(loop, maxScenario, maxRequest, totalDuration int, config *Config, stats *Statistics) {
 	var wg sync.WaitGroup
 	var wgIndicator sync.WaitGroup
-	var client http.Client
 	redirectFunc := func(req *http.Request, via []*http.Request) error {
 		if len(via) > 10 {
 			return fmt.Errorf("%d consecutive requests(redirects)", len(via))
