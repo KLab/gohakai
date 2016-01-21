@@ -75,7 +75,7 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 	postParams, retPostParams := atk.Action["post_params"]
 	if method == "POST" && retPostParams {
 		for k, v := range postParams.(map[interface{}]interface{}) {
-			values.Add(k.(string), v.(string))
+			values.Add(k.(string), ReplaceNames(v.(string), atk.ExVarOffset))
 		}
 		content = strings.NewReader(values.Encode())
 	} else {
