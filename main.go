@@ -306,6 +306,13 @@ func localMain(loop, maxScenario, maxRequest, totalDuration int, config *Config,
 		// mutate the subsequent redirect requests with the first Header
 		for key, val := range via[0].Header {
 			req.Header[key] = val
+			referer := req.Referer()
+			checkUrl, err := url.Parse(referer)
+			if err != nil {
+				log.Printf("url.Parse() Error: %v\n", err)
+				return err
+			}
+			req.URL.RawQuery = checkUrl.RawQuery
 		}
 		return nil
 	}
