@@ -24,6 +24,7 @@ var CONFIG_ROOT string
 var CONSTS map[string]string
 var EXVARS map[string]*ExVer
 var VARS map[string][]string
+var SCANNED_VARS map[string]string
 var NODES []Node
 var re *regexp.Regexp = regexp.MustCompile("%\\((.+?)\\)%")
 
@@ -69,6 +70,10 @@ func ReplaceNames(input string, offset map[string]int) string {
 			if e, ok := EXVARS[t[1]]; ok {
 				_e := e.Value[offset[t[1]]]
 				return _e
+			}
+
+			if s, ok := SCANNED_VARS[t[1]]; ok {
+				return s
 			}
 
 			return t[0]
@@ -254,6 +259,7 @@ func (c *Config) Load(filename string) error {
 	VARS = map[string][]string{}
 	EXVARS = map[string]*ExVer{}
 	CONSTS = c.Consts
+	SCANNED_VARS = map[string]string{}
 
 	c.loadVars()
 	c.loadNodes()

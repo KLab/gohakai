@@ -157,7 +157,14 @@ func (atk *Attacker) Attack(offset int) {
 		body, _ := ioutil.ReadAll(reader)
 
 		scan := regexp.MustCompile(_scan.(string))
-		if scan.Match(body) != true {
+		if scan.Match(body) {
+			names := scan.SubexpNames()
+			for _, tname := range scan.FindAllStringSubmatch(string(body), -1) {
+				for i, name := range tname[1:] {
+					SCANNED_VARS[names[i+1]] = name
+				}
+			}
+		} else {
 			validRes = false
 			log.Println(atk.Url)
 			fmt.Print(string(body))
