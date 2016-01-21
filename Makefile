@@ -33,3 +33,5 @@ clean:
 
 update-module:
 	go get -u -v gopkg.in/yaml.v2
+	go get -u -v golang.org/x/crypto/ssh
+	go get -u -v golang.org/x/net/http2
