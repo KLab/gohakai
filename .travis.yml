@@ -12,7 +12,7 @@ install:
 
 before_script:
     - goimports -d .
-    - gofmt -l
+    - gofmt -l .
 
 script:
     - go build -v .
