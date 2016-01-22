@@ -1,0 +1,21 @@
+language: go
+sudo: false
+
+matrix:
+    include:
+        - go: 1.5.3
+        - go: tip
+
+install:
+    - make update-module
+    - go get -u -v golang.org/x/tools/cmd/goimports
+
+before_script:
+    - goimports -d .
+    - gofmt -l
+
+script:
+    - go build -v .
+
+notifications:
+    email: false
