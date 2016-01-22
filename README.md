@@ -1,4 +1,7 @@
 ## gohakai
+
+[![Travis Build Status](https://travis-ci.org/KLab/gohakai.svg?branch=master)](https://travis-ci.org/KLab/gohakai)
+
 Internet hakai with Go.
 
 Internet hakai is HTTP load testing tool.
