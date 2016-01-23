@@ -360,15 +360,15 @@ func localMain(loop, maxScenario, maxRequest, totalDuration int, config *Config,
 	}
 
 	// attack
-	offset := map[string]int{}
 	for i := 0; i < loop*maxScenario; i++ {
 		wg.Add(1)
+		offset := map[string]int{}
 		for k := range EXVARS {
+			offset[k] = EXVARS[k].Offset
 			EXVARS[k].Offset += 1
 			if EXVARS[k].Offset >= len(EXVARS[k].Value) {
 				EXVARS[k].Offset = 0
 			}
-			offset[k] = EXVARS[k].Offset
 		}
 		w := Worker{Client: client, Config: config, ExVarOffset: offset}
 		limiter <- w
