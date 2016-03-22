@@ -163,7 +163,9 @@ func (atk *Attacker) Attack(offset int) {
 			names := scan.SubexpNames()
 			for _, tname := range scan.FindAllStringSubmatch(string(body), -1) {
 				for i, name := range tname[1:] {
+					m.Lock()
 					SCANNED_VARS[names[i+1]] = name
+					m.Unlock()
 				}
 			}
 		} else {
