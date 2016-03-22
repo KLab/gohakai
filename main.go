@@ -49,6 +49,7 @@ type Attacker struct {
 	Gzip        bool
 	QueryParams *map[string]string
 	ExVarOffset map[string]int
+	sync.RWMutex
 }
 
 type Worker struct {
@@ -117,6 +118,10 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 	return req, err
 }
 
+func _wrapRegexp(s string) interface{} {
+	return regexp.MustCompile(s)
+}
+
 func (atk *Attacker) Attack(offset int) {
 	req, err := atk.makeRequest()
 	if err != nil {
@@ -145,7 +150,9 @@ func (atk *Attacker) Attack(offset int) {
 	diffTime := t1.Sub(t0)
 
 	validRes := true
+	atk.RLock()
 	_scan, ret := atk.Action["scan"]
+	atk.RUnlock()
 	if ret {
 		// check body text
 		var reader io.ReadCloser
@@ -158,7 +165,18 @@ func (atk *Attacker) Attack(offset int) {
 		}
 		body, _ := ioutil.ReadAll(reader)
 
-		scan := regexp.MustCompile(_scan.(string))
+		// memoization
+		var scan *regexp.Regexp
+		_s, _ok := _scan.(string)
+		if _ok {
+			atk.Lock()
+			atk.Action["scan"] = _wrapRegexp(_s)
+			atk.Unlock()
+		}
+		atk.RLock()
+		scan = atk.Action["scan"].(*regexp.Regexp)
+		atk.RUnlock()
+
 		if scan.Match(body) {
 			names := scan.SubexpNames()
 			for _, tname := range scan.FindAllStringSubmatch(string(body), -1) {
