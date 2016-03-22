@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"gopkg.in/yaml.v2"
@@ -27,6 +28,7 @@ var VARS map[string][]string
 var SCANNED_VARS map[string]string
 var NODES []Node
 var re *regexp.Regexp = regexp.MustCompile("%\\((.+?)\\)%")
+var VARS_MUTEX sync.RWMutex
 
 type ExVer struct {
 	Value  []string
@@ -72,7 +74,10 @@ func ReplaceNames(input string, offset map[string]int) string {
 				return _e
 			}
 
-			if s, ok := SCANNED_VARS[t[1]]; ok {
+			VARS_MUTEX.RLock()
+			s, ok := SCANNED_VARS[t[1]]
+			VARS_MUTEX.RUnlock()
+			if ok {
 				return s
 			}
 
