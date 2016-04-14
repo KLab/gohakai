@@ -16,7 +16,7 @@ import (
 	"golang.org/x/net/http2"
 )
 
-const VERSION = "0.3"
+const VERSION = "0.3.1"
 const (
 	DEFALT_DOMAIN      = "http://localhost:8000"
 	DEFALUT_USER_AGENT = "gohakai"
