@@ -132,7 +132,7 @@ func (n *Node) RemoteAttack(c chan string) (err error) {
 	var b bytes.Buffer
 	n.Session.Stdout = &b
 	if err := n.Session.Run(command); err != nil {
-		fmt.Println("attack error:", err)
+		log.Println("attack error:", err)
 		return err
 	}
 
