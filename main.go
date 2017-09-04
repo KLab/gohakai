@@ -65,9 +65,9 @@ func hakai(c http.Client, config *Config, offset map[string]int) {
 		QueryParams: &queryParams,
 		ExVarOffset: offset,
 	}
-	for offset, action := range config.Actions {
+	for _, action := range config.Actions {
 		attacker.Action = action
-		attacker.Attack(offset)
+		attacker.Attack()
 	}
 }
 
