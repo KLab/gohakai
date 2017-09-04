@@ -53,6 +53,7 @@ type Config struct {
 	Consts      map[string]string        `yaml:"consts"`
 	ExVars      []map[string]string      `yaml:"exvars"`
 	Vars        []map[string]string      `yaml:"vars"`
+	Headers     map[string]string        `yaml:"headers"`
 	HTTPVersion int                      `yaml:"http_version"`
 }
 

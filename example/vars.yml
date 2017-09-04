@@ -10,7 +10,7 @@ exvars:
     - name: ev1
       file: ev.txt
     - name: ev2
-      file: ev.txt
+      file: ev2.txt
 
 vars:
     - name: v1
@@ -26,3 +26,6 @@ query_params:
     qp1: "%(ev1)%"
     qp2: "%(c1)%"
     qp3: "%(c2)%"
+
+headers:
+    X-Foo: "%(ev2)%"

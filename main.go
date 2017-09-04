@@ -55,6 +55,11 @@ func hakai(c http.Client, config *Config, offset map[string]int) {
 		queryParams[k] = vv
 	}
 
+	headers := map[string]string{}
+	for k, v := range config.Headers {
+		headers[k] = ReplaceNames(v, offset)
+	}
+
 	cookieJar, _ := cookiejar.New(nil)
 	c.Jar = cookieJar
 	attacker := Attacker{
@@ -63,6 +68,7 @@ func hakai(c http.Client, config *Config, offset map[string]int) {
 		Gzip:        config.Gzip,
 		UserAgent:   config.UserAgent,
 		QueryParams: &queryParams,
+		Headers:     &headers,
 		ExVarOffset: offset,
 	}
 	for _, action := range config.Actions {

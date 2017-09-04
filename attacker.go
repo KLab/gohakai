@@ -21,6 +21,7 @@ type Attacker struct {
 	UserAgent   string
 	Gzip        bool
 	QueryParams *map[string]string
+	Headers     *map[string]string
 	ExVarOffset map[string]int
 	sync.RWMutex
 }
@@ -80,6 +81,10 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 		values.Add(k, v)
 	}
 	req.URL.RawQuery = values.Encode()
+
+	for k, v := range *atk.Headers {
+		req.Header.Add(k, v)
+	}
 
 	req.Header.Set("User-Agent", atk.UserAgent)
 	return req, err
