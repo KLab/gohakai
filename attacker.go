@@ -89,7 +89,7 @@ func wrapRegexp(s string) interface{} {
 	return regexp.MustCompile(s)
 }
 
-func (atk *Attacker) Attack(offset int) {
+func (atk *Attacker) Attack() {
 	req, err := atk.makeRequest()
 	if err != nil {
 		ok <- false
