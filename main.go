@@ -16,7 +16,6 @@ import (
 	"golang.org/x/net/http2"
 )
 
-const VERSION = "0.3.1"
 const (
 	DEFALT_DOMAIN      = "http://localhost:8000"
 	DEFALUT_USER_AGENT = "gohakai"
@@ -29,6 +28,7 @@ const (
 
 var client http.Client
 
+var Version string
 var ExecMode string = MODE_NORMAL
 var GitCommit string
 var PathCount map[string]uint32
@@ -252,7 +252,7 @@ func clean() {
 
 func usage() {
 	fmt.Fprintln(os.Stderr, "gohakai - Internet Hakai with Go")
-	fmt.Fprintf(os.Stderr, "version:%s, id:%s\n\n", VERSION, GitCommit)
+	fmt.Fprintf(os.Stderr, "version:%s, id:%s\n\n", Version, GitCommit)
 	fmt.Fprintln(os.Stderr, "Usage: gohakai [option] config.yaml")
 	flag.PrintDefaults()
 	os.Exit(0)
