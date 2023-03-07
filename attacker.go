@@ -4,7 +4,6 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -164,7 +163,7 @@ func (atk *Attacker) Attack() {
 			fmt.Print(string(body))
 		}
 	} else {
-		if _, err := ioutil.ReadAll(res.Body); err != nil {
+		if _, err := io.ReadAll(res.Body); err != nil {
 			log.Println(err)
 		}
 	}

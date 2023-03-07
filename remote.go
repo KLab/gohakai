@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -25,9 +24,9 @@ type Node struct {
 }
 
 func (n *Node) NewSSHSession() (session *ssh.Session, err error) {
-	pkey, err := ioutil.ReadFile(n.SSHKeyFile)
+	pkey, err := os.ReadFile(n.SSHKeyFile)
 	if err != nil {
-		log.Println("ioutil.ReadFile(sshkey):", err)
+		log.Println("ReadFile(sshkey):", err)
 		return session, err
 	}
 

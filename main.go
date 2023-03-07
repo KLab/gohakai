@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
@@ -102,9 +101,9 @@ func setupNode(configFile string) {
 		} else {
 			wg.Add(1)
 			go func(_n Node, o, p int) {
-				srcGob, err := ioutil.TempFile(os.TempDir(), fmt.Sprintf("%s.node.%s", GOB_FILE, _n.Host))
+				srcGob, err := os.CreateTemp(os.TempDir(), fmt.Sprintf("%s.node.%s", GOB_FILE, _n.Host))
 				if err != nil {
-					log.Println("ioutil.TempFile() error:", err)
+					log.Println("CreateTemp() error:", err)
 					return
 				}
 				defer os.Remove(srcGob.Name())

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/gob"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"os"
@@ -111,9 +110,9 @@ func loadVarsFromFile(filename string) (lines []string) {
 }
 
 func loadVarsFromGobFile() {
-	buf, err := ioutil.ReadFile(GOB_FILE)
+	buf, err := os.ReadFile(GOB_FILE)
 	if err != nil {
-		log.Println("ioutil.ReadFile() error:", err)
+		log.Println("ReadFile() error:", err)
 		os.Exit(-1)
 	}
 
@@ -242,7 +241,7 @@ func (c *Config) loadNodes() {
 
 func (c *Config) Load(filename string) error {
 	rand.Seed(time.Now().Unix())
-	buf, err := ioutil.ReadFile(filename)
+	buf, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
