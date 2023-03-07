@@ -9,24 +9,24 @@ func TestReplaceNames(t *testing.T) {
 		params map[string]int
 		want   []string
 	}{
-		// {
-		// 	"const1",
-		// 	"/simple?v=%(c1)%",
-		// 	map[string]int{},
-		// 	[]string{"/simple?v=hoge"},
-		// },
-		// {
-		// 	"vars1",
-		// 	"/simple?v=%(v1)%",
-		// 	map[string]int{},
-		// 	[]string{"/simple?v=v1_0001", "/simple?v=v1_0002"},
-		// },
-		// {
-		// 	"exvars1",
-		// 	"/simple?v=%(ev1)%",
-		// 	map[string]int{},
-		// 	[]string{"/simple?v=10001"},
-		// },
+		{
+			"const1",
+			"/simple?v=%(c1)%",
+			map[string]int{},
+			[]string{"/simple?v=hoge"},
+		},
+		{
+			"vars1",
+			"/simple?v=%(v1)%",
+			map[string]int{},
+			[]string{"/simple?v=v1_0001", "/simple?v=v1_0002"},
+		},
+		{
+			"exvars1",
+			"/simple?v=%(ev1)%",
+			map[string]int{},
+			[]string{"/simple?v=10001"},
+		},
 		{
 			"non vars",
 			"/simple",
