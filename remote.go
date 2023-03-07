@@ -75,7 +75,10 @@ func (n *Node) Scp(src, dst string) (err error) {
 		src, _ := os.Open(src)
 		srcStat, _ := src.Stat()
 		fmt.Fprintln(w, "C0755", srcStat.Size(), dst)
-		io.Copy(w, src)
+		if _, err := io.Copy(w, src); err != nil {
+			log.Println("io.copy error", err)
+			return
+		}
 		fmt.Fprint(w, "\x00")
 	}()
 
@@ -96,7 +99,7 @@ func rebuildArgs() (ret []string) {
 	for _, v := range args {
 		if f := flag.Lookup(v); f != nil {
 			ret = append(ret, fmt.Sprintf("-%s", v))
-			ret = append(ret, fmt.Sprintf("%s", f.Value))
+			ret = append(ret, f.Value.String())
 		}
 	}
 

@@ -37,7 +37,7 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 	atk.Url.Path = checkUrl.Path
 
 	method, ret := atk.Action["method"]
-	if ret != true {
+	if !ret {
 		method = "GET"
 	}
 
@@ -61,7 +61,7 @@ func (atk *Attacker) makeRequest() (req *http.Request, err error) {
 		return nil, err
 	}
 	contentType, ret := atk.Action["content_type"]
-	if ret == true {
+	if ret {
 		req.Header.Set("Content-Type", contentType.(string))
 	} else if method == "POST" && retPostParams {
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -135,7 +135,7 @@ func (atk *Attacker) Attack() {
 		default:
 			reader = res.Body
 		}
-		body, _ := ioutil.ReadAll(reader)
+		body, _ := io.ReadAll(reader)
 
 		// memoization
 		var scan *regexp.Regexp

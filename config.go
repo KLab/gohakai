@@ -27,7 +27,7 @@ var EXVARS map[string]*ExVer
 var VARS map[string][]string
 var SCANNED_VARS map[string]string
 var NODES []Node
-var re *regexp.Regexp = regexp.MustCompile("%\\((.+?)\\)%")
+var re *regexp.Regexp = regexp.MustCompile(`%\((.+?)\)%`)
 var VARS_MUTEX sync.RWMutex
 
 type ExVer struct {
@@ -61,7 +61,7 @@ func ReplaceNames(input string, offset map[string]int) string {
 	cb := func(s string) string {
 		tname := re.FindAllStringSubmatch(s, -1)
 
-		for _, t := range tname {
+		for idx, t := range tname {
 			if c, ok := CONSTS[t[1]]; ok {
 				return c
 			}
@@ -82,7 +82,9 @@ func ReplaceNames(input string, offset map[string]int) string {
 				return s
 			}
 
-			return t[0]
+			if idx == 0 {
+				return t[0]
+			}
 		}
 
 		return tname[0][0]
@@ -155,7 +157,9 @@ func dumpVars(filename string, offset, procs, allProcs int) {
 		log.Fatal("encode:", err)
 	}
 
-	ioutil.WriteFile(filename, buf.Bytes(), os.ModePerm)
+	if err := os.WriteFile(filename, buf.Bytes(), os.ModePerm); err != nil {
+		log.Fatal("write gob file error:", err)
+	}
 }
 
 func (c *Config) loadVars() {

@@ -114,15 +114,24 @@ func setupNode(configFile string) {
 				// TODO: cofigurable? remote is same architecture, now.
 				src := HAKAI_BIN_NAME
 				dst := HAKAI_BIN_NAME
-				_n.Scp(src, dst)
+				if err := _n.Scp(src, dst); err != nil {
+					log.Println("scp error:", err)
+					return
+				}
 
 				// config file
-				_n.Scp(configFile, REMOTE_CONF)
+				if err := _n.Scp(configFile, REMOTE_CONF); err != nil {
+					log.Println("scp error:", err)
+					return
+				}
 
 				// all vars file
 				dst = GOB_FILE
 				dumpVars(srcGob.Name(), o, _n.Proc, p)
-				_n.Scp(srcGob.Name(), dst)
+				if err := _n.Scp(srcGob.Name(), dst); err != nil {
+					log.Println("scp error:", err)
+					return
+				}
 			}(NODES[key], i, allProcs)
 		}
 
