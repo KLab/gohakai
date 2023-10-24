@@ -1,6 +1,4 @@
-## gohakai
-
-[![Travis Build Status](https://travis-ci.org/KLab/gohakai.svg?branch=master)](https://travis-ci.org/KLab/gohakai)
+## gohakai [![CI](https://github.com/KLab/gohakai/actions/workflows/ci.yml/badge.svg)](https://github.com/KLab/gohakai/actions/workflows/ci.yml)
 
 Internet hakai with Go.
 
